@@ -1,12 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.jsx';
+
+const base = import.meta.env.BASE_URL;
 ---
 
 <Layout title="Heidelberger SC">
-  <main class="hero">
-    <h1>Welcome to HSC</h1>
-    <p>Die Raute im Herzen</p>
-  </main>
+  <Hero client:load base={base} />
 </Layout>
 
 <style>

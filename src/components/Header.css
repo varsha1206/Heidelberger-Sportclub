@@ -1,6 +1,8 @@
 .site-header {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 100;
   background: #000;
   color: #fcfe58;
@@ -123,28 +125,36 @@
   border-bottom: 2px solid #fcfe58;
 }
 
-.col ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: 10px;
+.col-title {
+  display: inline-block;
+  font-size: 1.0rem;
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+  padding-bottom: 10px;
+  margin-bottom: 14px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.35);
+  transition: border-color 0.2s ease;
+}
+
+.col-title:hover,
+.col-title:focus-visible {
+  border-bottom-color: #fff;
 }
 
 .col ul a {
   display: inline-block;
   color: #fcfe58;
-  opacity: 0.75;
   text-decoration: none;
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition: color 0.2s ease, transform 0.2s ease;
 }
 
 .col ul a:hover,
+
 .col ul a:focus-visible {
-  opacity: 1;
+  color: #fff;
   transform: translateX(4px);
 }
-
 /* ---------- Mobile ---------- */
 @media (max-width: 960px) {
   .site-header .bar {
