@@ -1,5 +1,6 @@
 ---
 import Header from '../components/Header.jsx';
+import Footer from '../components/Footer.astro';
 
 const { title = 'Heidelberger SC' } = Astro.props;
 const base = import.meta.env.BASE_URL;
@@ -15,6 +16,7 @@ const base = import.meta.env.BASE_URL;
   <body>
     <Header client:load base={base} />
     <slot />
+    <Footer />
   </body>
 </html>
 
