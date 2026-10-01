@@ -1,0 +1,253 @@
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #000;
+  color: #fcfe58;
+}
+
+.site-header .bar {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 72px;
+  display: flex;
+  align-items: stretch;
+}
+
+.brand-mobile,
+.burger {
+  display: none;
+}
+
+/* ---------- Desktop nav ---------- */
+.nav {
+  display: flex;
+}
+
+.nav > ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav > ul > li {
+  display: flex;
+}
+
+.nav > ul > li > a {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 18px;
+  color: #fcfe58;
+  text-decoration: none;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+/* underline indicator */
+.nav > ul > li > a::after {
+  content: '';
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 0;
+  height: 3px;
+  background: #fcfe58;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
+}
+
+.nav > ul > li:hover > a::after,
+.nav > ul > li:focus-within > a::after {
+  transform: scaleX(1);
+}
+
+.chevron {
+  width: 6px;
+  height: 6px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg) translateY(-2px);
+  transition: transform 0.2s ease;
+}
+
+.has-menu:hover .chevron,
+.has-menu:focus-within .chevron {
+  transform: rotate(225deg);
+}
+
+/* ---------- Mega panel ---------- */
+.panel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #000;
+  border-top: 1px solid rgba(252, 254, 88, 0.25);
+  box-shadow: 0 24px 40px rgba(0, 0, 0, 0.25);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+}
+
+.has-menu:hover > .panel,
+.has-menu:focus-within > .panel {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.panel-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 32px 24px 40px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+}
+
+.col-title {
+  display: inline-block;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fcfe58;
+  text-decoration: none;
+  padding-bottom: 10px;
+  margin-bottom: 14px;
+  border-bottom: 2px solid #fcfe58;
+}
+
+.col ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.col ul a {
+  display: inline-block;
+  color: #fcfe58;
+  opacity: 0.75;
+  text-decoration: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.col ul a:hover,
+.col ul a:focus-visible {
+  opacity: 1;
+  transform: translateX(4px);
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 960px) {
+  .site-header .bar {
+    align-items: center;
+  }
+
+  .brand-mobile {
+    display: block;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+  }
+
+  .burger {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    margin-left: auto;
+    padding: 8px;
+    background: none;
+    border: 0;
+    cursor: pointer;
+  }
+
+  .burger span {
+    width: 24px;
+    height: 2px;
+    background: #fcfe58;
+  }
+
+  .nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    max-height: calc(100vh - 72px);
+    overflow-y: auto;
+    padding-bottom: 16px;
+    background: #000;
+  }
+
+  .nav.is-open {
+    display: block;
+  }
+
+  .nav > ul {
+    flex-direction: column;
+  }
+
+  .nav > ul > li {
+    display: block;
+  }
+
+  .nav > ul > li > a {
+    padding: 14px 24px;
+  }
+
+  .nav > ul > li > a::after,
+  .chevron {
+    display: none;
+  }
+
+  .panel {
+    position: static;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    box-shadow: none;
+    border-top: 0;
+  }
+
+  .panel-inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 0 24px 12px;
+  }
+}
+/* ---------- Logo ---------- */
+.logo {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  height: 48px;
+  width: auto;
+  display: block;
+  transition: transform 0.25s ease;
+}
+
+.logo:hover img {
+  transform: scale(1.06);
+}
+
+@media (max-width: 960px) {
+  .logo {
+    order: -1;
+    margin: 0 12px 0 0;
+  }
+
+  .logo img {
+    height: 40px;
+  }
+}
