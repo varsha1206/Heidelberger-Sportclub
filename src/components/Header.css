@@ -17,6 +17,17 @@
   align-items: stretch;
 }
 
+.site-header ul,
+.site-header li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.site-header li::marker {
+  content: '';
+}
+
 .brand-mobile,
 .burger {
   display: none;
@@ -29,9 +40,6 @@
 
 .nav > ul {
   display: flex;
-  list-style: none;
-  margin: 0;
-  padding: 0;
 }
 
 .nav > ul > li {
@@ -50,7 +58,6 @@
   letter-spacing: 0.02em;
 }
 
-/* underline indicator */
 .nav > ul > li > a::after {
   content: '';
   position: absolute;
@@ -83,7 +90,7 @@
   transform: rotate(225deg);
 }
 
-/* ---------- Mega panel ---------- */
+/* ---------- Dropdown panel ---------- */
 .panel {
   position: absolute;
   top: 100%;
@@ -108,57 +115,77 @@
 .panel-inner {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 32px 24px 40px;
+  padding: 26px 24px 32px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 32px;
+  gap: 28px;
 }
 
 .col-title {
   display: inline-block;
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: #fcfe58;
-  text-decoration: none;
-  padding-bottom: 10px;
-  margin-bottom: 14px;
-  border-bottom: 2px solid #fcfe58;
-}
-
-.col-title {
-  display: inline-block;
-  font-size: 1.0rem;
+  font-size: 0.95rem;
   font-weight: 700;
   color: #fff;
   text-decoration: none;
-  padding-bottom: 10px;
-  margin-bottom: 14px;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.35);
-  transition: border-color 0.2s ease;
+  margin-bottom: 12px;
+  transition: color 0.2s ease;
 }
 
 .col-title:hover,
 .col-title:focus-visible {
-  border-bottom-color: #fff;
+  color: #fcfe58;
+}
+
+.col ul {
+  display: grid;
+  gap: 8px;
 }
 
 .col ul a {
   display: inline-block;
-  color: #fcfe58;
+  font-size: 0.88rem;
+  color: #fff;
   text-decoration: none;
   transition: color 0.2s ease, transform 0.2s ease;
 }
 
 .col ul a:hover,
-
 .col ul a:focus-visible {
-  color: #fff;
+  color: #fcfe58;
   transform: translateX(4px);
 }
+
+/* ---------- Logo ---------- */
+.logo {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  height: 48px;
+  width: auto;
+  display: block;
+  transition: transform 0.25s ease;
+}
+
+.logo:hover img {
+  transform: scale(1.06);
+}
+
 /* ---------- Mobile ---------- */
 @media (max-width: 960px) {
   .site-header .bar {
     align-items: center;
+  }
+
+  .logo {
+    order: -1;
+    margin: 0 12px 0 0;
+  }
+
+  .logo img {
+    height: 40px;
   }
 
   .brand-mobile {
@@ -191,10 +218,11 @@
     top: 100%;
     left: 0;
     right: 0;
-    max-height: calc(100vh - 72px);
+    max-height: calc(100svh - 72px);
     overflow-y: auto;
     padding-bottom: 16px;
     background: #000;
+    border-top: 1px solid rgba(252, 254, 88, 0.25);
   }
 
   .nav.is-open {
@@ -207,57 +235,61 @@
 
   .nav > ul > li {
     display: block;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   .nav > ul > li > a {
-    padding: 14px 24px;
+    justify-content: space-between;
+    padding: 16px 24px;
   }
 
-  .nav > ul > li > a::after,
-  .chevron {
+  .nav > ul > li > a::after {
     display: none;
+  }
+
+  .has-menu:hover .chevron,
+  .has-menu:focus-within .chevron {
+    transform: rotate(45deg) translateY(-2px);
+  }
+
+  .has-menu.sub-open .chevron {
+    transform: rotate(225deg);
   }
 
   .panel {
     position: static;
+    display: none;
     opacity: 1;
     visibility: visible;
     transform: none;
     box-shadow: none;
     border-top: 0;
+    background: #0d0d0d;
+  }
+
+  .has-menu.sub-open > .panel {
+    display: block;
   }
 
   .panel-inner {
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    padding: 0 24px 12px;
-  }
-}
-/* ---------- Logo ---------- */
-.logo {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-}
-
-.logo img {
-  height: 48px;
-  width: auto;
-  display: block;
-  transition: transform 0.25s ease;
-}
-
-.logo:hover img {
-  transform: scale(1.06);
-}
-
-@media (max-width: 960px) {
-  .logo {
-    order: -1;
-    margin: 0 12px 0 0;
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding: 18px 24px 20px;
   }
 
-  .logo img {
-    height: 40px;
+  .col-title {
+    margin-bottom: 8px;
+  }
+
+  .col ul {
+    gap: 4px;
+    padding-left: 14px;
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .col ul a {
+    display: block;
+    padding: 8px 0;
+    font-size: 0.95rem;
   }
 }

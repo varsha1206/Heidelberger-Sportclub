@@ -29,11 +29,28 @@ const nav = [
   { label: 'Impressum', href: '/impressum' },
 ];
 
+const isMobile = () =>
+  typeof window !== 'undefined' && window.matchMedia('(max-width: 960px)').matches;
+
 export default function Header({ base = '' }) {
   const [open, setOpen] = useState(false);
+  const [subOpen, setSubOpen] = useState(false);
   const prefix = base.replace(/\/$/, '');
   const url = (path) => prefix + path;
-  const close = () => setOpen(false);
+
+  const close = () => {
+    setOpen(false);
+    setSubOpen(false);
+  };
+
+  const handleTopClick = (e, item) => {
+    if (item.columns && isMobile()) {
+      e.preventDefault();
+      setSubOpen(!subOpen);
+    } else {
+      close();
+    }
+  };
 
   return (
     <header className="site-header">
@@ -54,11 +71,15 @@ export default function Header({ base = '' }) {
         <nav className={`nav ${open ? 'is-open' : ''}`} aria-label="Hauptnavigation">
           <ul>
             {nav.map((item) => (
-              <li key={item.label} className={item.columns ? 'has-menu' : ''}>
+              <li
+                key={item.label}
+                className={item.columns ? `has-menu ${subOpen ? 'sub-open' : ''}` : ''}
+              >
                 <a
                   href={url(item.href)}
-                  onClick={close}
+                  onClick={(e) => handleTopClick(e, item)}
                   aria-haspopup={item.columns ? 'true' : undefined}
+                  aria-expanded={item.columns ? subOpen : undefined}
                 >
                   {item.label}
                   {item.columns && <span className="chevron" aria-hidden="true" />}
@@ -92,6 +113,7 @@ export default function Header({ base = '' }) {
             ))}
           </ul>
         </nav>
+
         <a className="logo" href={url('/')} onClick={close} aria-label="Heidelberger SC Startseite">
           <img src={url('/HSC-Logo.png')} alt="HSC Logo" width="48" height="48" />
         </a>
