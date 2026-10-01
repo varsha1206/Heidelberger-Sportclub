@@ -3,6 +3,6 @@ import react from '@astrojs/react';
 
 export default defineConfig({
   site: 'https://varsha1206.github.io',
-  base: '/HSC-Live-Score',
+  base: '/Heidelberger-Sportclub',
   integrations: [react()],
 });
