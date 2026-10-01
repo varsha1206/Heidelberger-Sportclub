@@ -1,0 +1,72 @@
+.hero {
+  position: relative;
+  height: calc(100svh - 72px);
+  min-height: 460px;
+  overflow: hidden;
+  background: #000;
+  color: #fff;
+}
+
+.hero-slides,
+.hero-slide,
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+}
+
+.hero-slide {
+  background-size: cover;
+  background-position: center;
+  filter: blur(3px);
+  transform: scale(1.08); /* hides the soft blurred edges */
+  opacity: 0;
+  transition: opacity 1.5s ease-in-out;
+}
+
+.hero-slide.is-active {
+  opacity: 1;
+  animation: slowZoom 8s ease-out forwards;
+}
+
+@keyframes slowZoom {
+  from { transform: scale(1.08); }
+  to   { transform: scale(1.16); }
+}
+
+/* dark layer so the white text is always readable */
+.hero-overlay {
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.hero-content {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 24px;
+}
+
+.hero-content h1 {
+  margin: 0 0 12px;
+  font-size: clamp(2.2rem, 7vw, 5rem);
+  line-height: 1.05;
+  letter-spacing: 0.01em;
+  color: #fff;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+}
+
+.hero-content p {
+  margin: 0;
+  font-size: clamp(1.1rem, 2.5vw, 1.8rem);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #fcfe58;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-slide { transition: none; animation: none !important; }
+}
