@@ -1,0 +1,353 @@
+---
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const training = {
+  days: 'Dienstag + Donnerstag',
+  time: '19:30 – 21:15 Uhr',
+};
+
+// photo: file name inside public/trainer/ (e.g. 'max-mustermann.jpg'), leave '' for initials
+// fupa: widget URL from FuPa, leave '' until you have it
+const teams = [
+  {
+    name: 'Herren I',
+    badge: 'I',
+    trainers: [{ name: 'Marco Tauer', photo: '' , number: '+49 1573 0889531'}],
+    fupa: '3KQFrAwgEmACBcDiITgE3K7Crex',
+  },
+  {
+    name: 'Herren II',
+    badge: 'II',
+    trainers: [{ name: 'Jonas Haffelder', photo: '', number: '+49 1520 3337037' }],
+    fupa: '3KQGz2EHGA1XJA2ODnzuBogfnhu',
+  },
+  {
+    name: 'Herren III',
+    badge: 'III',
+    trainers: [
+      { name: 'Pirmin Brosig', photo: '' , number: '+49 176 72215464' },
+      { name: 'Julian Löffler', photo: '', number: '' },
+    ],
+    fupa: '3KQHOSL8FWH1PL1hdy1ecU6ZUaL',
+  },
+];
+
+const initials = (name) =>
+  name
+    .split(' ')
+    .map((p) => p[0])
+    .join('')
+    .slice(0, 2)
+    .toUpperCase();
+---
+
+<section class="teams">
+  <div class="inner">
+    <h2>Unsere Mannschaften</h2>
+    <span class="divider" aria-hidden="true"></span>
+
+    <div class="grid">
+      {teams.map((t) => (
+        <details class="card">
+          <summary>
+            <span class="badge" aria-hidden="true">{t.badge}</span>
+            <h3>{t.name}</h3>
+
+            <div class="trainers">
+              <p class="trainer-label">{t.trainers.length > 1 ? 'Trainer' : 'Trainer'}</p>
+              <ul>
+                {t.trainers.map((tr) => (
+                  <li>
+                    <span class="avatar">
+                        {tr.photo ? (
+                        <img src={`${base}/trainer/${tr.photo}`} alt={tr.name} loading="lazy" />
+                        ) : (
+                        <span aria-hidden="true">{initials(tr.name)}</span>
+                        )}
+                    </span>
+                    <span class="trainer-info">
+                        <span class="trainer-name">{tr.name}</span>
+                        {tr.number && (
+                        <a class="trainer-phone" href={`tel:${tr.number.replace(/[^\d+]/g, '')}`}>
+                            {tr.number}
+                        </a>
+                        )}
+                    </span>
+                 </li>
+                ))}
+              </ul>
+            </div>
+
+            <span class="toggle">
+              <span class="when-closed">Trainingszeiten &amp; Spiel anzeigen</span>
+              <span class="when-open">Weniger anzeigen</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </span>
+          </summary>
+
+          <div class="details">
+            <div class="block">
+              <h4>Trainingszeiten</h4>
+              <p class="days">{training.days}</p>
+              <p class="time">{training.time}</p>
+            </div>
+
+            <div class="block">
+              <div class="fupa" data-id={t.fupa}>
+                {t.fupa ? (
+                  <>
+                    <p class="fupa-note">
+                      Mit dem Laden werden Daten an FuPa (fupa.net) übertragen.
+                    </p>
+                    <button type="button" class="fupa-load">Spielergebnis laden</button>
+                  </>
+                ) : (
+                  <p class="fupa-note">Das FuPa-Widget wird hier eingebunden.</p>
+                )}
+              </div>
+            </div>
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll('.fupa-load').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const box = btn.closest('.fupa');
+      const id = box?.dataset.id;
+      if (!box || !id) return;
+
+      const root = document.createElement('div');
+      root.id = `fp-widget_root-${id}`;
+      box.replaceChildren(root);
+      box.classList.add('loaded');
+
+      const script = document.createElement('script');
+      script.src = 'https://widget-api.fupa.net/vendor/widget.js?v1';
+      document.body.appendChild(script);
+    });
+  });
+</script>
+
+<style>
+.fupa.loaded {
+  display: block;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+}
+  .teams {
+    padding: 5rem 1.5rem;
+    background: repeating-linear-gradient(
+      90deg,
+      #2e7d32 0,
+      #2e7d32 90px,
+      #388e3c 90px,
+      #388e3c 180px
+    );
+  }
+  .inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  h2 {
+    margin: 0;
+    font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+    color: #fff;
+  }
+  .divider {
+    display: block;
+    width: 80px;
+    height: 3px;
+    margin: 1.25rem auto 3rem;
+    background: #fcfe58;
+    border-radius: 3px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    align-items: start; /* opening one card doesn't stretch the others */
+  }
+
+  .card {
+    background: #000;
+    color: #fff;
+    border: 2px solid #fcfe58;
+    border-radius: 18px;
+    overflow: hidden;
+    text-align: center;
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+  }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 14px 28px rgba(0, 0, 0, 0.3); }
+  .card[open] { box-shadow: 0 14px 28px rgba(0, 0, 0, 0.3); }
+
+  summary {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1.5rem 1.5rem;
+    cursor: pointer;
+    list-style: none;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary:focus-visible { outline: 3px solid #fcfe58; outline-offset: -6px; border-radius: 16px; }
+
+  .badge {
+    display: grid;
+    place-items: center;
+    min-width: 56px;
+    height: 56px;
+    padding: 0 0.5rem;
+    margin-bottom: 1rem;
+    border: 2px solid #fcfe58;
+    border-radius: 50%;
+    color: #fcfe58;
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+  }
+  h3 {
+    margin: 0 0 1.25rem;
+    font-size: 1.6rem;
+    color: #fcfe58;
+  }
+
+  .trainers { width: 100%; margin-bottom: 1.5rem; }
+  .trainer-label {
+    margin: 0 0 0.75rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.6);
+  }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    align-items: center;
+  }
+  li { display: flex; align-items: center; gap: 0.75rem; }
+  .avatar {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 2px solid #fcfe58;
+    background: #1a1a1a;
+    color: #fcfe58;
+    font-size: 0.9rem;
+    font-weight: 700;
+    overflow: hidden;
+  }
+  .avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .trainer-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  line-height: 1.3;
+}
+.trainer-name { font-size: 1rem; }
+.trainer-phone {
+  font-size: 0.8rem;
+  color: #8fd19e; /* soft pitch green, distinct from the yellow accent */
+  text-decoration: none;
+  letter-spacing: 0.02em;
+}
+.trainer-phone:hover,
+.trainer-phone:focus-visible {
+  color: #fcfe58;
+  text-decoration: underline;
+}
+
+  /* the clearly clickable toggle */
+  .toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 1.1rem;
+    background: #000;
+    color: #fcfe58;
+    border: 2px solid #fcfe58;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  summary:hover .toggle { background: #fcfe58; color: #000; }
+  .toggle svg { width: 16px; height: 16px; transition: transform 0.3s ease; }
+  .card[open] .toggle svg { transform: rotate(180deg); }
+  .when-open { display: none; }
+  .card[open] .when-open { display: inline; }
+  .card[open] .when-closed { display: none; }
+
+  .details {
+    padding: 0 1.5rem 1.75rem;
+    border-top: 1px solid rgba(252, 254, 88, 0.3);
+    animation: reveal 0.3s ease;
+  }
+  @keyframes reveal {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: none; }
+  }
+  .block { padding-top: 1.5rem; }
+  h4 {
+    margin: 0 0 0.6rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #fcfe58;
+  }
+  .days { margin: 0; font-size: 1.1rem; font-weight: 600; }
+  .time { margin: 0.2rem 0 0; color: rgba(255, 255, 255, 0.85); }
+
+  .fupa {
+    min-height: 140px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    border: 2px dashed rgba(252, 254, 88, 0.4);
+    border-radius: 12px;
+  }
+  .fupa :global(iframe) {
+    width: 100%;
+    min-height: 220px;
+    border: 0;
+    border-radius: 8px;
+    background: #fff;
+  }
+  .fupa-note { margin: 0; font-size: 0.85rem; color: rgba(255, 255, 255, 0.7); }
+  .fupa-load {
+    padding: 0.5rem 1.1rem;
+    background: #000;
+    color: #fcfe58;
+    border: 2px solid #fcfe58;
+    border-radius: 999px;
+    font: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  .fupa-load:hover { background: #fcfe58; color: #000; }
+
+  @media (max-width: 1060px) {
+    .grid { grid-template-columns: 1fr; max-width: 520px; margin: 0 auto; }
+  }
+</style>
