@@ -1,0 +1,28 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="Fußball – Heidelberger Sport-Club">
+  <section class="fussball-intro">
+    <h1>Willkommen in der Fußball-Abteilung</h1>
+  </section>
+</Layout>
+
+<style>
+  .fussball-intro {
+    background: #000;
+    color: #fff;
+    min-height: calc(100vh - 72px - 120px); /* viewport minus header and footer, so the footer isn't pulled up */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1.5rem;
+    text-align: center;
+  }
+
+  .fussball-intro h1 {
+    color: #fcfe58;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    margin: 0;
+  }
+</style>
