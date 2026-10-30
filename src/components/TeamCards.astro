@@ -9,6 +9,8 @@ const initials = (name) =>
     .join('')
     .slice(0, 2)
     .toUpperCase();
+
+const slots = (t) => (Array.isArray(t.training) ? t.training : [t.training]);
 ---
 
 <section class="teams">
@@ -64,9 +66,13 @@ const initials = (name) =>
 
           <div class="details">
             <div class="block">
-              <h4>Trainingszeiten</h4>
-              <p class="days">{t.training.days}</p>
-              <p class="time">{t.training.time}</p>
+            <h4>Trainingszeiten</h4>
+            {slots(t).map((s) => (
+                <div class="slot">
+                <p class="days">{s.days}</p>
+                <p class="time">{s.time}</p>
+                </div>
+            ))}
             </div>
 
             {t.league && (
@@ -113,6 +119,7 @@ const initials = (name) =>
 </script>
 
 <style>
+  .slot + .slot { margin-top: 1rem; }
   .teams {
     padding: 5rem 1.5rem;
     background: repeating-linear-gradient(

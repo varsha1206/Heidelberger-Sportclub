@@ -6,9 +6,16 @@ const {
   title,
   paragraphs = [],
   email = '',
+  contactTitle = 'Kontakt',
+  contactNames = '',
+  contactNote = '',
+  contacts = [],
   iconsLeft = ['man', 'child'],
   iconsRight = ['woman', 'child'],
 } = Astro.props;
+
+// a single `email` becomes a one-item list
+const contactList = contacts.length ? contacts : email ? [{ label: '', email }] : [];
 ---
 
 <section class="intro">
@@ -23,18 +30,28 @@ const {
       <span class="divider" aria-hidden="true"></span>
       {paragraphs.map((p) => <p>{p}</p>)}
 
-      {email && (
-        <div class="contact">
-          <span class="contact-label">Kontakt</span>
-          <a href={`mailto:${email}`}>
+      {contactList.length > 0 && (
+  <div class="contact">
+    <span class="contact-label">{contactTitle}</span>
+    {contactNames && <p class="contact-names">{contactNames}</p>}
+    {contactNote && <p class="contact-note">{contactNote}</p>}
+
+    <ul class="contact-list">
+      {contactList.map((c) => (
+        <li>
+          {c.label && <span class="contact-text">{c.label}</span>}
+          <a href={`mailto:${c.email}`}>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <rect x="3" y="5" width="18" height="14" rx="2" />
               <path d="M3 7l9 6 9-6" />
             </svg>
-            {email}
+            {c.email}
           </a>
-        </div>
-      )}
+        </li>
+      ))}
+    </ul>
+  </div>
+)}
     </div>
 
     <div class="icons icons-right">
@@ -160,6 +177,39 @@ const {
     color: #000;
   }
   .contact svg { width: 20px; height: 20px; }
+  .contact-names {
+  margin: 0 !important;
+  font-size: 1rem !important;
+  font-weight: 600;
+  color: #fff !important;
+}
+.contact-note {
+  margin: 0 !important;
+  max-width: 520px;
+  font-size: 0.95rem !important;
+  line-height: 1.6 !important;
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+.contact-list {
+  list-style: none;
+  margin: 0.5rem 0 0;
+  padding: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.contact-list li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+.contact-text {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+.contact a { max-width: 100%; word-break: break-all; }
 
   @media (max-width: 960px) {
     .intro-inner { grid-template-columns: 1fr; gap: 2rem; }

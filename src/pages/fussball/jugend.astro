@@ -1,0 +1,87 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import AbteilungIntro from '../../components/AbteilungIntro.astro';
+import TeamCards from '../../components/TeamCards.astro';
+
+const teams = [
+  {
+    name: 'Minis (3-4 Jahre)',
+    badge: 'MI',
+    training: { days: 'Donnerstag', time: '17:00 - 18:00 Uhr' },
+  },
+  {
+    name: 'Bambini Jungs',
+    badge: 'J',
+    training: { days: 'Dienstag', time: '17:00 - 18:00 Uhr' },
+  },
+  {
+    name: 'Bambini Mädchen',
+    badge: 'M',
+    training: { days: 'Dienstag', time: '17:00 - 18:00 Uhr' },
+  },
+  {
+    name: 'F-Jugend Jungs',
+    badge: 'FJ',
+    training: { days: 'Dienstag + Freitag (gemischt)', time: '17:00 - 18:00 Uhr' },
+  },
+  {
+    name: 'F-Jugend Mädchen',
+    badge: 'FM',
+    training: { days: 'Dienstag + Freitag (gemischt)', time: '17:00 - 18:00 Uhr' },
+  },
+  {
+    name: 'E1-Jugend Jungs',
+    badge: 'E1',
+    training: { days: 'Dienstag + Freitag', time: '17:00 - 18:30 Uhr' },
+  },
+  {
+    name: 'E2-Jugend Jungs',
+    badge: 'E2',
+    training: { days: 'Dienstag + Freitag', time: '17:00 - 18:30 Uhr' },
+  },
+  {
+    name: 'E-Jugend Mädchen',
+    badge: 'EM',
+    training: { days: 'Mittwoch', time: '17:00 - 18:30 Uhr' },
+  },
+  {
+    name: '​D-Jugend',
+    badge: 'DJ',
+    training: { days: 'Montag + Mittwoch', time: '17:30 - 19:00 Uhr' },
+  },
+  {
+  name: 'C-Jugend',
+  badge: 'CJ',
+  training: [
+    { days: 'Montag', time: '18:00 – 19:30 Uhr' },
+    { days: 'Mittwoch', time: '17:30 – 19:00 Uhr' },
+  ],
+  trainers: [],
+  league: false,
+},
+  
+];
+---
+
+<Layout title="Jugend – Heidelberger Sport-Club">
+  <AbteilungIntro
+    title="Unsere Jugend"
+    paragraphs={[
+      'Wir arbeiten tatkräftig an der Entwicklung einer nachhaltigen Jugendabteilung. Unser Ziel ist es von den Bambini bis zur A-Jugend eine durchgehende Jugend zu stellen - für Mädchen & Jungs.',
+      'Mithilfe unserer motivierten Übungsleiterinnen und Übungsleiter und durch den ehrenamtlichen Einsatz der Eltern und unserer aktiven Fußballerinnen und Fußballer soll der Heidelberger SC Heimat und Förderung für Kinder im Alter von 3-18 Jahren bieten. Die Abteilungen sind stetig am Wachsen und bieten Kindern und Jugendlichen aus den angrenzenden Stadtteilen die Möglichkeit Fußballsport zu betreiben.',
+      'Unsere Jugendabteilung folgt dem Leitgedanken des Vereins, dass die Gemeinschaft und die Freude am Sport im Vordergrund stehen soll.',
+    ]}
+    contactTitle="Kontakt Jugendleitung"
+    contactNames="Martina Dolcemascolo, Luca Slotty & Rainald Dolcemascolo"
+    contactNote="Bei Interesse am Training schicke uns gerne vorab eine E-Mail unter Angabe des Jahrgangs, damit wir die Kapazitäten im Blick behalten."
+    contacts={[
+        { label: 'Interesse an Mädchenfußball?', email: 'maedchen.fussball@heidelberger-sc.de' },
+        { label: 'Dein Kind ist jünger als 11 Jahre?', email: 'u11.fussball@heidelberger-sc.de' },
+        { label: 'Für alle ab 11 Jahren', email: 'u18.fussball@heidelberger-sc.de' },
+        { label: 'Allgemeine Anfragen', email: 'jugendleitung.fussball@heidelberger-sc.de' },
+    ]}
+    iconsLeft={['child', 'child']}
+    iconsRight={['child', 'child']}
+  />
+  <TeamCards teams={teams} />
+</Layout>
