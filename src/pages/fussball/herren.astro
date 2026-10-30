@@ -1,10 +1,51 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import HerrenIntro from '../../components/HerrenIntro.astro';
-import HerrenMannschaften from '../../components/HerrenMannschaften.astro';
+import AbteilungIntro from '../../components/AbteilungIntro.astro';
+import TeamCards from '../../components/TeamCards.astro';
+
+const training = { days: 'Dienstag + Donnerstag', time: '19:30 – 21:15 Uhr' };
+
+const teams = [
+  {
+    name: 'Herren I',
+    badge: 'I',
+    league: true,
+    trainers: [{ name: 'Marco Tauer', photo: '' , phone: '+49 1573 0889531'}],
+    training: {days: 'Dienstag + Donnerstag', time: '19:30 - 21:15 Uhr'},
+    fupa: '3KQFrAwgEmACBcDiITgE3K7Crex',
+  },
+  {
+    name: 'Herren II',
+    badge: 'II',
+    league: true,
+    trainers: [{ name: 'Jonas Haffelder', photo: '', phone: '+49 1520 3337037' }],
+    training: {days: 'Dienstag + Donnerstag', time: '19:30 - 21:15 Uhr'},
+    fupa: '3KQGz2EHGA1XJA2ODnzuBogfnhu',
+  },
+  {
+    name: 'Herren III',
+    badge: 'III',
+    league: true,
+    training: {days: 'Dienstag + Donnerstag', time: '19:30 - 21:15 Uhr'},
+    trainers: [
+      { name: 'Pirmin Brosig', photo: '' , phone: '+49 176 72215464' },
+      { name: 'Julian Löffler', photo: '', phone: 'NA' },
+    ],
+    fupa: '3KQHOSL8FWH1PL1hdy1ecU6ZUaL',
+  },
+];
 ---
 
 <Layout title="Herren – Heidelberger Sport-Club">
-  <HerrenIntro />
-  <HerrenMannschaften />
+  <AbteilungIntro
+    title="Unsere Herren"
+    paragraphs={[
+      'Drei Mannschaften, ein Verein, eine Leidenschaft: Bei uns zählt, was auf dem Platz passiert, und was drumherum entsteht. Ob ehrgeiziger Kampf um die Punkte oder entspannter Kick nach der Arbeit, Einsatz, Teamgeist und Spaß am Spiel stehen bei uns an erster Stelle.',
+      'Egal ob du schon lange dabei bist, neu in Heidelberg oder nach einer Pause zurück am Ball: Komm einfach zum Training vorbei und lerne uns kennen!',
+    ]}
+    email="herren.fussball@heidelberger-sc.de"
+    iconsLeft={['man', 'man']}
+    iconsRight={['man', 'man']}
+  />
+  <TeamCards teams={teams} />
 </Layout>

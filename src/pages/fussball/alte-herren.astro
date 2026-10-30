@@ -1,0 +1,33 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import AbteilungIntro from '../../components/AbteilungIntro.astro';
+import TeamCards from '../../components/TeamCards.astro';
+
+const teams = [
+  {
+    name: 'Alte Herren',
+    badge: 'AH',
+    tagline: 'Kameradschaft & Kick',
+    training: { days: 'Donnerstag', time: '18:00 - 20:00 Uhr' },
+    league: false,
+  },
+];
+---
+
+<Layout title="Alte Herren – Heidelberger Sport-Club">
+  <AbteilungIntro
+    title="Unsere Alten Herren"
+    paragraphs={['Wir befinden uns auf dem Höhepunkt unserer Karriere nach der Karriere.',
+                 'Es geht nicht mehr ganz so schnell und intensiv wie früher, aber dafür mit mehr Auge!',
+                 'Wir haben die Freude am Kicken und dem Sport nicht verloren.',
+                 'Und wenn wir eins immer noch können, dann eine dritte Halbzeit genießen!',
+                 'Wenn du Lust hast mitzuspielen, dann komm einfach mal vorbei!',
+                 'Wir freuen uns über jeden, der die Alten Herren bereichert!',
+
+]}
+    email="ah.fussball@heidelberger-sc.de"
+    iconsLeft={['man', 'man']}
+    iconsRight={['man', 'man']}
+  />
+  <TeamCards teams={teams} heading="Unsere Mannschaft" />
+</Layout>
