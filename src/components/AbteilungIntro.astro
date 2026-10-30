@@ -1,45 +1,61 @@
 ---
 import Player from './Player.astro';
+
+const {
+  eyebrow = 'Fußball',
+  title,
+  paragraphs = [],
+  email = '',
+  contactTitle = 'Kontakt',
+  contactNames = '',
+  contactNote = '',
+  contacts = [],
+  iconsLeft = ['man', 'child'],
+  iconsRight = ['woman', 'child'],
+} = Astro.props;
+
+// a single `email` becomes a one-item list
+const contactList = contacts.length ? contacts : email ? [{ label: '', email }] : [];
 ---
 
 <section class="intro">
   <div class="intro-inner">
     <div class="icons icons-left">
-      <Player type="man" size={120} />
-      <Player type="man" size={84} />
+      {iconsLeft.map((type, i) => <Player type={type} size={i === 0 ? 120 : 84} />)}
     </div>
 
     <div class="text">
-      <p class="eyebrow">Fußball</p>
-      <h1>Unsere Herren</h1>
+      <p class="eyebrow">{eyebrow}</p>
+      <h1>{title}</h1>
       <span class="divider" aria-hidden="true"></span>
-      <p>
-        Drei Mannschaften, ein Verein, eine Leidenschaft: Bei uns zählt, was
-        auf dem Platz passiert, und was drumherum entsteht. Ob ehrgeiziger
-        Kampf um die Punkte oder entspannter Kick nach der Arbeit,
-        Einsatz, Teamgeist und Spaß am Spiel stehen bei uns an erster Stelle.
-      </p>
-      <p>
-        Egal ob du schon lange dabei bist, neu in Heidelberg oder nach einer
-        Pause zurück am Ball: Komm einfach zum Training vorbei und lerne uns
-        kennen!
-      </p>
+      {paragraphs.map((p) => <p>{p}</p>)}
 
-      <div class="contact">
-        <span class="contact-label">Kontakt</span>
-        <a href="mailto:herren.fussball@heidelberger-sc.de">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect x="3" y="5" width="18" height="14" rx="2" />
-            <path d="M3 7l9 6 9-6" />
-          </svg>
-          herren.fussball@heidelberger-sc.de
-        </a>
-      </div>
+      {contactList.length > 0 && (
+  <div class="contact">
+    <span class="contact-label">{contactTitle}</span>
+    {contactNames && <p class="contact-names">{contactNames}</p>}
+    {contactNote && <p class="contact-note">{contactNote}</p>}
+
+    <ul class="contact-list">
+      {contactList.map((c) => (
+        <li>
+          {c.label && <span class="contact-text">{c.label}</span>}
+          <a href={`mailto:${c.email}`}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="5" width="18" height="14" rx="2" />
+              <path d="M3 7l9 6 9-6" />
+            </svg>
+            {c.email}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+)}
     </div>
 
     <div class="icons icons-right">
-      <Player type="man" size={120} />
-      <Player type="man" size={84} />
+      {iconsRight.map((type, i) => <Player type={type} size={i === 0 ? 120 : 84} />)}
     </div>
   </div>
 </section>
@@ -161,6 +177,39 @@ import Player from './Player.astro';
     color: #000;
   }
   .contact svg { width: 20px; height: 20px; }
+  .contact-names {
+  margin: 0 !important;
+  font-size: 1rem !important;
+  font-weight: 600;
+  color: #fff !important;
+}
+.contact-note {
+  margin: 0 !important;
+  max-width: 520px;
+  font-size: 0.95rem !important;
+  line-height: 1.6 !important;
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+.contact-list {
+  list-style: none;
+  margin: 0.5rem 0 0;
+  padding: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.contact-list li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+.contact-text {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+.contact a { max-width: 100%; word-break: break-all; }
 
   @media (max-width: 960px) {
     .intro-inner { grid-template-columns: 1fr; gap: 2rem; }

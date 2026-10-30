@@ -1,0 +1,48 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import AbteilungIntro from '../../components/AbteilungIntro.astro';
+import TeamCards from '../../components/TeamCards.astro';
+
+const training = { days: 'Montag + Mittwoch', time: '19:30 – 21:00 Uhr' };
+
+const teams = [
+  {
+    name: 'Damen I',
+    badge: 'I',
+    training: { days: 'Montag + Mittwoch', time: '19:30 – 21:00 Uhr' },
+    trainers: [{ name: 'Pirmin Brosig', phone: '+49 17672215464', photo: '' }],
+    league: true,
+    fupa: '3LPiaJ9ocpWu44LT0fXFMlLJUlB',
+  },
+  {
+    name: 'Damen II',
+    badge: 'II',
+    training: { days: 'Montag + Mittwoch', time: '19:30 – 21:00 Uhr' },
+    trainers: [{ name: 'Erik Thake', phone: '+49 15903815952', photo: '' },{ name: 'David Weis', phone: 'NA', photo: ''}],
+    league: true,
+    fupa: '3LPinYBWkHVPqzCf1jPU9E1lzZ5',
+  },
+  {
+    name: 'Freizeitteam',
+    badge: 'F',
+    training: { days: 'Mittwoch', time: '19:00 – 20:30 Uhr' },
+    trainers: [{ name: 'Erick Vargas', phone: 'NA', photo: '' }],
+    league: false,
+    fupa: '',
+  },
+];
+---
+
+<Layout title="Damen – Heidelberger Sport-Club">
+  <AbteilungIntro
+    title="Unsere Damen"
+    paragraphs={[
+      'Pässe, Tore, Teamgeist: Bei uns kickt ein Team, das den Fußball lebt. Ob du in der Liga um Punkte kämpfst oder im Freizeitteam einfach Spaß an der Bewegung hast, bei uns findest du deinen Platz.',
+      'Du bist neu in Heidelberg, willst nach einer Pause wieder einsteigen oder noch nie im Verein gespielt? Komm einfach zum Training vorbei, wir freuen uns auf dich!',
+    ]}
+    email="damen.fussball@heidelberger-sc.de"
+    iconsLeft={['woman', 'woman']}
+    iconsRight={['woman', 'woman']}
+  />
+  <TeamCards teams={teams} />
+</Layout>
